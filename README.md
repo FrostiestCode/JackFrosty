@@ -1,191 +1,62 @@
-<p align="center"><img src="fastlane/metadata/android/en-US/images/icon.png" width="150"></p>
-<h1 align="center"><b>Auxio</b></h1>
-<h4 align="center">A simple, rational music player for Android.</h4>
-<p align="center">
-    <a href="https://github.com/oxygencobalt/Auxio/releases/tag/v4.1.5">
-        <img alt="Latest Version" src="https://img.shields.io/static/v1?label=tag&message=v4.1.5&color=64B5F6&style=flat">
-    </a>
-    <a href="https://github.com/oxygencobalt/Auxio/releases/">
-        <img alt="Releases" src="https://img.shields.io/github/downloads/OxygenCobalt/Auxio/total.svg?color=4B95DE&style=flat">
-    </a>
-    <a href="https://www.gnu.org/licenses/gpl-3.0">
-        <img src="https://img.shields.io/badge/license-GPL%20v3-2B6DBE.svg?style=flat">
-    </a>
-    <img alt="Minimum SDK Version" src="https://img.shields.io/badge/API-24%2B-1450A8?style=flat">
-</p>
-<h4 align="center"><a href="/CHANGELOG.md">Changelog</a> | <a href="https://github.com/OxygenCobalt/Auxio/wiki">Wiki</a> | <a href="https://github.com/OxygenCobalt/Auxio#Donate">Donate</a></h4>
-<p align="center">
-    <a href="https://f-droid.org/app/org.oxycblt.auxio"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" width="250"></a>
-    <a href="https://accrescent.app/app/org.oxycblt.auxio">
-        <img alt="Get it on Accrescent" src="https://accrescent.app/badges/get-it-on.png" width="250">
-    </a>
-</p>
-<p align="center">
-    <a href="https://hosted.weblate.org/engage/auxio/"><img height=64 src="https://hosted.weblate.org/widgets/auxio/-/strings/287x66-grey.png" alt="Translation status" /></a>
-</p>
+# JackFrosty
 
-## About
+Auxio-inspired local music player for **desktop**, built with **Tauri 2 + React + TypeScript** (Rust backend, web frontend).
 
-Auxio is a local music player with a fast, reliable UI/UX without the many useless features present in other music players. Built off of modern media playback libraries, Auxio has superior library support and listening quality compared to other apps that use outdated Android functionality. In short, **It plays music.**
+Default target: **Windows**. Also builds for **macOS** and **Linux** via Tauri.
 
-**The default branch is the development version of the repository. For a stable version, see the master branch.**
+Original Android source (reference only, GPL-3.0): `../AndriodAuxioAppSrc/` (Auxio by OxygenCobalt + `musikr` pipeline + patched Media3).
 
-## Screenshots
+## Feature parity goals (ported from Auxio)
 
-<p align="center">
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/shot0.png" width=250>
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/shot1.png" width=250>
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/shot2.png" width=250>
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/shot3.png" width=250>
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/shot4.png" width=250>
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/shot5.png" width=250>
-</p>
+| Auxio (Android) | JackFrosty (desktop) |
+|---|---|
+| `musikr` pipeline: Explore → Extract (TagLib) → Evaluate (graph) | Rust `library.rs`: `walkdir` scan → `lofty` tags → album/artist/genre graph + cover cache |
+| Songs / Albums / Artists / Genres / Playlists tabs, sortable + reorderable | Sidebar tabs + sortable lists (`LibraryViews.tsx`) |
+| Album/Artist/Genre/Playlist detail + song properties dialog | `DetailView.tsx` |
+| Playback bar + expanded panel + queue sheet, ExoPlayer + ReplayGain + gapless | Rust `player.rs` (`rodio` sink, queue, shuffle/repeat, seek, volume, ReplayGain pre-amp) + `PlaybackBar.tsx` + `QueueDrawer.tsx` |
+| Live search with type filters | `SearchView.tsx` |
+| Settings (UI / Personalize / Music dirs+separators / Audio) + About | `SettingsView.tsx`, persisted via `tauri-plugin-store` |
+| M3U import/export, playlist CRUD | `scan_library` + `playlist_*.rs` commands + store actions |
+| Android widgets / Auto / headset autoplay | Out of scope for desktop v1 (system MPRIS/media-keys planned) |
 
+## Dev
 
-## Features
-
-- Playback based on [Media3 ExoPlayer](https://developer.android.com/guide/topics/media/exoplayer)
-- Snappy UI derived from the latest Material Design guidelines
-- Opinionated UX that prioritizes ease of use over edge cases
-- Customizable behavior
-- Support for disc numbers, multiple artists, release types,
-precise/original dates, sort tags, and more
-- Advanced artist system that unifies artists and album artists
-- SD Card-aware folder management
-- Reliable playlisting functionality
-- Playback state persistence
-- Android Auto support
-- Automatic gapless playback
-- Full ReplayGain support (On MP3, FLAC, OGG, OPUS, and MP4 files)
-- External equalizer support (ex. Wavelet)
-- Edge-to-edge
-- Embedded covers support
-- Search functionality
-- Headset autoplay
-- Stylish widgets that automatically adapt to their size
-- Completely private and offline
-- No rounded album covers (if you want them)
-
-## Permissions
-
-- Storage (`READ_MEDIA_AUDIO`, `READ_EXTERNAL_STORAGE`) to read and play your music files
-- Services (`FOREGROUND_SERVICE`, `WAKE_LOCK`) to keep the music playing in the background
-- Notifications (`POST_NOTIFICATION`) to indicate ongoing playback and music loading
-
-## Donate
-
-You can support Auxio's development through [my Github Sponsors page](https://github.com/sponsors/OxygenCobalt). Get the ability to prioritize features and have your profile added to the README, Release Changelogs, and even the app itself!
-
-<h3 align="center">Legendary supporters:</h3>
-<p align="center">
-    <a href="https://github.com/bkkellyh"><img src="https://avatars.githubusercontent.com/u/248118457?v=4" width=250 /></a> 
-    <a href="ttps://github.com/gruntstumper"><img src="https://avatars.githubusercontent.com/u/308816080?v=4" width=125 /></a> 
-</p>
-<h3 align="center">
-    <a href="https://github.com/bkkellyh">@bkkellyh</a> - <i>$500!</i>, <a href="https://github.com/gruntstumper">@gruntstumper</a> - $100
-</h3>
-
-<hr />
-
-<p align="center"><b>$8/month supporters:</b></p>
-
-<p align="center">
-    <a href="https://github.com/uku3lig"><img src="https://avatars.githubusercontent.com/u/61147779?v=4" width=50 /></a>
-</p>
-<p align="center">
-    And **1** Private Sponsor!
-</p>
-
-## Building
-
-Auxio relies on a patched version of Media3 that enables some extra playback features, alongside taglib for metadata
-parsing. This adds some caveats to the build process:
-1. `cmake` and `ninja-build` must be installed before building the project.
-2. The project uses submodules, so when cloning initially, use `git clone --recurse-submodules` to properly
-download the external code.
-3. You are **unable** to build this project on windows, as the custom Media3 build runs shell scripts that
-will only work on unix-based systems.
-
-### Set up Android Studio
-
-#### Install Android Studio.
-
-```bash
-pkg -S android-studio
+```powershell
+cd jackfrosty
+npm install
+npm run tauri:dev
 ```
 
-#### Configuring Android Studio:
+Requirements: Node 20+, Rust stable (1.77+), WebView2 (Windows, preinstalled on Win10/11), platform audio deps.
 
-- Be sure to have NDK tools, version 28.2.13676358. You can search it on Languages & Frameworks > Android SDK.
-- Install Java-21 with your system package manager
+## Build
 
-    ```bash
-    sudo pkg -S jdk21-openjdk
-    ```
-    Additionally: Set java version to jdk21-openjdk
-
-- Run ./gradlew assembleDebug
-
-#### Connecting to your Android Device
-
-You can connect your Mobile Phone through USB to run the app. 
-
-1. **Enable Developer Options on your phone**
-   - Go to **Settings > About phone**  
-   - Tap **Build number** 7 times until you see *"You are now a developer!"*
-
-2. **Enable USB debugging**
-   - Go to **Settings > Developer options**  
-   - Turn on **USB debugging**
-
-3. **Connect your phone to the computer**
-   - Use a USB cable  
-   - On your phone, accept the *Allow USB debugging?* prompt
-
-4. **Verify that your device is detected**
-   ```bash
-   cd ~/Android/Sdk/platform-tools
-   ./adb devices
-   ```
-
-Android Studio also offers virtual devices that come with this pre-configured.
-
-#### Install the app on the Android Phone
-To install the app on your physical device or emulator, run this command:
-
-```bash
-./gradlew installDebug
+```powershell
+npm run tauri:build
 ```
 
-Auxio should now appear in the list of Apps
+Artifacts:
+- Windows (default): `src-tauri/target/release/bundle/nsis/*.exe`, `msi/`
+- Linux: `.AppImage`, `.deb`
+- macOS: `.app`, `.dmg`
 
-#### Load music to Auxio (Optional)
+## Project layout
 
-You can move files from your pc to your device / emulator to test the music using this command:
-
-```bash
-cd ~/Android/Sdk/platform-tools
-./adb push ~Music/ /sdcard/Music
 ```
-
-## Contributing
-
-Auxio accepts most contributions as long as they follow the [Contribution Guidelines](/.github/CONTRIBUTING.md).
-
-However, feature additions and major UI changes are less likely to be accepted. See
-[Why Are These Features Missing?](https://github.com/OxygenCobalt/Auxio/wiki/Why-Are-These-Features-Missing%3F)
-for more information.
-
-
+jackfrosty/
+  src/                 # React+TS frontend (mirrors Auxio home/detail/playback/search/settings)
+    types.ts           # Song/Album/Artist/Genre/Playlist/Library (mirrors musikr Music.kt/Library.kt)
+    tauri.ts           # invoke() wrappers with browser/mock fallback
+    mock.ts            # sample library for `npm run dev` without backend
+    store.ts           # zustand: library + playback queue + settings + navigation
+    components/        # Sidebar, LibraryViews, DetailView, PlaybackBar, QueueDrawer, SearchView, SettingsView
+  src-tauri/
+    tauri.conf.json    # windows default, macOS + linux targets
+    src/main.rs        # Tauri commands wiring
+    src/library.rs     # scan + tag parse + graph + covers + m3u
+    src/player.rs      # rodio queue player
+```
 
 ## License
 
-[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
-
-Auxio is Free Software: You can use, study share and improve it at your
-will. Specifically you can redistribute and/or modify it under the terms of the
-[GNU General Public License](https://www.gnu.org/licenses/gpl.html) as
-published by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-More information can be found [here](https://github.com/OxygenCobalt/Auxio/wiki/Licenses).
+GPL-3.0-or-later (matches Auxio). See `../AndriodAuxioAppSrc/LICENSE`.

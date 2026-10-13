@@ -1,18 +1,7 @@
-# Gradle
-.gradle
-local.properties
-build/
-release/
-
-# Studio
-.idea/
-.DS_Store/
-captures/
-
-# Other
-.externalNativeBuild
-*.iml
-.cxx
-.kotlin
-.aider*
-.env
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/WixTools/
+*.log
+.DS_Store
+Thumbs.db

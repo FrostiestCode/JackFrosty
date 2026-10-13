@@ -1,0 +1,26 @@
+[package]
+name = "jackfrosty"
+version = "0.1.0"
+description = "JackFrosty — Auxio-inspired local music player for desktop (Windows default, macOS, Linux)"
+authors = ["JackFrosty Contributors"]
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-fs = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-store = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+walkdir = "2"
+lofty = "0.22"
+rodio = "0.20"
+uuid = { version = "1", features = ["v5"] }
+base64 = "0.22"
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
